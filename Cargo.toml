@@ -3,7 +3,7 @@ name = "periodic-table-rs"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
-description = """Rust constants for the elements of the periodic table."""
+description = "Rust constants for the elements of the periodic table."
 homepage = "https://github.com/eliaxelang007/Periodic-Table-Rs"
 repository = "https://github.com/eliaxelang007/Periodic-Table-Rs"
 readme = "README.md"
@@ -11,3 +11,4 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+strum_macros = "0.24.3"

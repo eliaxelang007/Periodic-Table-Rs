@@ -4,6 +4,8 @@ pub use names::Name;
 pub mod symbols;
 pub use symbols::Symbol;
 
+use strum_macros::AsRefStr;
+
 #[derive(Debug)]
 pub struct Element {
     pub atomic_number: u8,
@@ -25,14 +27,14 @@ pub struct Element {
     pub year_discovered: YearDiscovered,
 }
 
-#[derive(Debug)]
+#[derive(Debug, AsRefStr)]
 pub enum MatterState {
     Gas,
     Solid,
     Liquid,
 }
 
-#[derive(Debug)]
+#[derive(Debug, AsRefStr)]
 pub enum GroupBlock {
     Nonmetal,
     NobleGas,
@@ -53,7 +55,7 @@ pub struct Color {
     pub blue: u8,
 }
 
-#[derive(Debug)]
+#[derive(Debug, AsRefStr)]
 pub enum Orbital {
     S,
     P,
@@ -68,7 +70,7 @@ pub struct ElectronConfigurationPart {
     pub electrons: u8,
 }
 
-#[derive(Debug)]
+#[derive(Debug, AsRefStr)]
 pub enum YearDiscovered {
     Year(u16),
     Ancient,

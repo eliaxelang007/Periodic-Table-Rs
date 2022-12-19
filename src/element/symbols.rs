@@ -1,5 +1,6 @@
+use strum_macros::AsRefStr;
 
-#[derive(Debug)]
+#[derive(Debug, AsRefStr)]
 pub enum Symbol {
     H,
     He,

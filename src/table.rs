@@ -1,7 +1,9 @@
 use super::element::Element;
 use super::elements::*;
 
-pub const PERIODIC_TABLE: [&Element; 118] = [
+pub const ELEMENT_COUNT: u8 = 118;
+
+pub const PERIODIC_TABLE: [&Element; (ELEMENT_COUNT as usize)] = [
     HYDROGEN,
     HELIUM,
     LITHIUM,

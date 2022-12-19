@@ -1,4 +1,6 @@
-#[derive(Debug)]
+use strum_macros::AsRefStr;
+
+#[derive(Debug, AsRefStr)]
 pub enum Name {
     Hydrogen,
     Helium,
