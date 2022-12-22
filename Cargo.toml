@@ -1,12 +1,16 @@
 [package]
+authors = ["Elijah Axel L. Ang"]
 name = "periodic-table-rs"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
-description = "Rust constants for the elements of the periodic table."
+description = "A chemistry library written in Rust."
 homepage = "https://github.com/eliaxelang007/Periodic-Table-Rs"
 repository = "https://github.com/eliaxelang007/Periodic-Table-Rs"
 readme = "README.md"
+keywords = ["chemistry", "chemicals", "molecules", "periodic-table", "elements"]
+categories = ["data-structures", "science", "mathematics"]
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
