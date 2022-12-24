@@ -12,6 +12,8 @@ This is a Rust library for chemistry.
 Here's some sample code that shows how you can get the atomic mass, boiling point, and density of hydrogen. 
 
 ```rust
+/* Note: These snippets are untested */
+
 use periodic_table_rs::HYDROGEN;
 
 fn main() {
@@ -21,7 +23,7 @@ fn main() {
 }
 ```
 ```rust
-/* Or, you can also do this. */
+/* Or, you can do this. */
 
 use periodic_table_rs::{Element, PERIODIC_TABLE};
 
