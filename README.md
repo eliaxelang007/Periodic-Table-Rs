@@ -39,7 +39,7 @@ fn main() {
 ## Documentation
 
 The documentation for this project is in its [crates.io](https://crates.io/crates/periodic-table-rs) page.
-[Here's a quick link to it.](https://docs.rs/periodic-table-rs/0.1.0/periodic_table_rs/)
+[Here's a quick link to it.](https://docs.rs/periodic-table-rs/latest/periodic_table_rs/index.html)
 
 ## Additional information
 
