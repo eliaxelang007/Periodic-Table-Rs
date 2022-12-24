@@ -1,34 +1,36 @@
-//! A Rust library that takes the elements of the periodic table and turns
-//! them into Rust structs.
+//! This is a chemsistry library for Rust.
 //!
-//! I've made the element's names, symbols, states of matter, group blocks, and more
-//! into enums among other things that (hopefully) make this library as easy to use as
-//! possible.
+//! For now, it only contains constants for each of the elements of the periodic table,
+//! but in the future, I'd like it to be able to do calculations on molecules such as
+//! determining if they're bonded ionically, covalently, or metalically and finding their
+//! molecular masses.
 //!
-//! Here's the Element struct's definition:
+//! Here's a quick example to get you up and running.
 //!
 //! ```rust
-//! pub struct Element {
-//!     pub atomic_number: u8,
-//!     pub symbol: Symbol,
-//!     pub name: Name,
-//!     pub atomic_mass: f64,
-//!     pub cpk_hex_color: Option<Color>,
-//!     pub electron_configuration: &'static [ElectronConfigurationPart],
-//!     pub electronegativity: Option<f64>,
-//!     pub atomic_radius: Option<u16>,
-//!     pub ionization_energy: Option<f64>,
-//!     pub electron_affinity: Option<f64>,
-//!     pub oxidation_states: Option<&'static [i8]>,
-//!     pub standard_state: MatterState,
-//!     pub melting_point: Option<f64>,
-//!     pub boiling_point: Option<f64>,
-//!     pub density: Option<f64>,
-//!     pub group_block: GroupBlock,
-//!     pub year_discovered: YearDiscovered,
+//! /* Note: These snippets are untested */
+//! 
+//! use periodic_table_rs::HYDROGEN;
+//! 
+//! fn main() {
+//!     println!("{}", HYDROGEN.atomic_mass);
+//!     println!("{}", HYDROGEN.boiling_point);
+//!     println!("{}", HYDROGEN.density);
 //! }
 //! ```
-//!
+//! ```rust
+//! /* Or, you can do this. */
+//! 
+//! use periodic_table_rs::{Element, PERIODIC_TABLE};
+//! 
+//! fn main() {
+//!     const HYDROGEN: Element = PERIODIC_TABLE[0];
+//! 
+//!     println!("{}", HYDROGEN.atomic_mass);
+//!     println!("{}", HYDROGEN.boiling_point);
+//!     println!("{}", HYDROGEN.density);
+//! }
+//! ```
 
 pub mod element;
 pub use element::{
