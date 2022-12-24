@@ -8,27 +8,25 @@
 //! Here's a quick example to get you up and running.
 //!
 //! ```rust
-//! /* Note: These snippets are untested */
-//! 
 //! use periodic_table_rs::HYDROGEN;
 //! 
 //! fn main() {
-//!     println!("{}", HYDROGEN.atomic_mass);
-//!     println!("{}", HYDROGEN.boiling_point);
-//!     println!("{}", HYDROGEN.density);
+//!     println!("{:?}", HYDROGEN.atomic_mass);
+//!     println!("{:?}", HYDROGEN.boiling_point);
+//!     println!("{:?}", HYDROGEN.density);
 //! }
 //! ```
 //! ```rust
 //! /* Or, you can do this. */
 //! 
 //! use periodic_table_rs::{Element, PERIODIC_TABLE};
-//! 
+//!
 //! fn main() {
-//!     const HYDROGEN: Element = PERIODIC_TABLE[0];
+//!     const HYDROGEN: &Element = PERIODIC_TABLE[0];
 //! 
-//!     println!("{}", HYDROGEN.atomic_mass);
-//!     println!("{}", HYDROGEN.boiling_point);
-//!     println!("{}", HYDROGEN.density);
+//!     println!("{:?}", HYDROGEN.atomic_mass);
+//!     println!("{:?}", HYDROGEN.boiling_point);
+//!     println!("{:?}", HYDROGEN.density);
 //! }
 //! ```
 
