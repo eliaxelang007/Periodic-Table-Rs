@@ -1,52 +1,88 @@
-use serde::{Deserialize};
+use serde::de::value::MapDeserializer;
+use serde::Deserialize;
+
+use serde_json::Value;
+
+use serde_with::{serde_as, DisplayFromStr};
+
 use heck::ToSnakeCase;
 
-pub fn make_elements_idiomatic(unidiomatic: RawDataFormat) -> Vec<IdiomaticElement> {
+use std::iter::zip;
+use std::collections::HashMap;
+
+pub fn get_pub_chem_elements(unidiomatic: RawDataFormat) -> Vec<PubChemElement> {
     let table = unidiomatic.Table;
-    let key_names = table.Columns.Column.iter().map(|key| key.to_snake_case());
+    let element_keys = table.Columns.Column.iter().map(|key| key.to_snake_case());
 
     let rows = table.Row;
 
-    let idiomatic = Vec::<IdiomaticElement>::with_capacity({
+    let mut idiomatic = Vec::<PubChemElement>::with_capacity({
         let element_count = rows.len();
         assert_eq!(element_count, 118);
         element_count
     });
 
-    for row in rows.iter().map(|row| row.Cell) {
-        
+    for element_values in rows.iter().map(|row| &row.Cell) {
+        let idiomatic_element_json = zip(
+            element_keys.clone(), 
+            element_values.clone().map(|property| Value::from(property))
+        ).collect::<HashMap<String, Value>>();
+
+        let idiomatic_element = PubChemElement::deserialize(
+            MapDeserializer::new(idiomatic_element_json.into_iter())
+        ).unwrap();
+
+        idiomatic.push(idiomatic_element);
     }
 
     idiomatic
 }
 
-pub struct IdiomaticElement {
-    atomic_number: String,
-    symbol: String,
-    name: String,
-    atomic_mass: String,
-    cpk_hex_color: String,
-    electron_configuration: String,
-    electronegativity: String,
-    atomic_radius: String,
-    ionization_energy: String,
-    electron_affinity: String,
-    oxidation_states: String,
-    standard_state: String,
-    melting_point: String,
-    density: String,
-    group_block: String,
-    year_discovered: String
+#[derive(Deserialize)]
+pub struct PubChemElement {
+    #[serde_as(as = "DisplayFromStr")]
+    pub atomic_number: u8,
+    pub symbol: String,
+    pub name: String,
+    #[serde_as(as = "DisplayFromStr")]
+    pub atomic_mass: f64,
+    #[serde(deserialize_with = "deserialize_color")]
+    pub cpk_hex_color: Option<Color>,
+    #[serde(deserialize_with = "deserialize_electron_configuration")]
+    pub electron_configuration: Vec<ElectronConfigurationPart>,
+    #[serde_as(as = "DisplayFromStr")]
+    pub electronegativity: Option<f64>,
+    #[serde_as(as = "DisplayFromStr")]
+    pub atomic_radius: Option<u16>,
+    #[serde_as(as = "DisplayFromStr")]
+    pub ionization_energy: Option<f64>,
+    #[serde_as(as = "DisplayFromStr")]
+    pub electron_affinity: Option<f64>,
+    #[serde_as(as = "DisplayFromStr")]
+    pub oxidation_states: Option<Vec<i8>>,
+    pub standard_state: String,
+    #[serde_as(as = "DisplayFromStr")]
+    pub melting_point: Option<f64>,
+    #[serde_as(as = "DisplayFromStr")]
+    pub boiling_point: Option<f64>,
+    #[serde_as(as = "DisplayFromStr")]
+    pub density: Option<f64>,
+    pub group_block: String,
+    pub year_discovered: String,
 }
 
 #[derive(Deserialize)]
-pub struct RawDataFormat { #[allow(non_snake_case)] Table: TableFormat }
+#[allow(non_snake_case)]
+pub struct RawDataFormat {  Table: TableFormat }
 
 #[derive(Deserialize)]
-struct TableFormat { #[allow(non_snake_case)] Columns: ColumnsFormat, #[allow(non_snake_case)] Row: Vec<RowFormat> }
+#[allow(non_snake_case)]
+struct TableFormat {  Columns: ColumnsFormat,  Row: Vec<RowFormat> }
 
 #[derive(Deserialize)]
-struct RowFormat { #[allow(non_snake_case)] Cell: [String; 17] }
+#[allow(non_snake_case)]
+struct RowFormat { Cell: [String; 17] }
 
 #[derive(Deserialize)]
-struct ColumnsFormat { #[allow(non_snake_case)] Column: Vec<String> }
+#[allow(non_snake_case)]
+struct ColumnsFormat {  Column: [String; 17] }
