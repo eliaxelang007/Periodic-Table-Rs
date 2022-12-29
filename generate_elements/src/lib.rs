@@ -1,24 +1,26 @@
 extern crate proc_macro;
 
-use serde_json::from_str;
-
-mod stage_1;
-use stage_1::get_pub_chem_elements;
-
-mod stage_2;
-use stage_2::fill_in_missing;
-
-mod stage_3;
-use stage_3::generate_rust_types;
-
-const PUB_CHEM_RAW_DATA: &'static str = include_str!("pub_chem.json");
 
 #[proc_macro]
 pub fn generate_elements(_: TokenStream) -> TokenStream {
-    let element_data = from_str(PUB_CHEM_RAW_DATA).unwrap();
+    use serde_json::from_str;
 
-    let idiomatic_element_data = get_pub_chem_elements(element_data);
-    let filled_in = fill_in_missing(idiomatic_element_data);
+    const PUB_CHEM_RAW_DATA: &'static str = include_str!("pub_chem.json");
 
-    generate_rust_types()
+    let pub_chem_json = from_str(PUB_CHEM_RAW_DATA).unwrap();
+
+    mod pub_chem;
+    use pub_chem::idiomize_elements;
+    let idiomatic_element_json = idiomize_elements(pub_chem_json);
+
+
+    let revised_element_json = fill_in_element_properties(idiomized_elements);
+
+
+    let cleaned_elements_json = clean_elements(revised_elements);
+
+
+    let element_structures = structure_elements(cleaned_elements);
+    
+    generate_tokens(element_structures);
 }
