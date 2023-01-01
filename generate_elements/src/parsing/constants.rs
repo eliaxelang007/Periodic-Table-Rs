@@ -1,0 +1,1 @@
+pub const ELEMENT_COUNT: u8 = 118;
